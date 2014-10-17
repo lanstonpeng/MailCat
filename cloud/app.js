@@ -1,6 +1,5 @@
 // 在 Cloud code 里初始化 Express 框架
 var express = require('express');
-var mandrill = require('mandrill');
 var app = express();
 
 // App 全局配置
@@ -11,6 +10,10 @@ app.use(express.bodyParser());    // 读取请求 body 的中间件
 // 使用 Express 路由 API 服务 /hello 的 HTTP GET 请求
 app.get('/hello', function(req, res) {
   res.render('hello', { message: 'Congrats, you just set up your app!' });
+});
+
+app.get('/test', function(req, res) {
+  res.render('hello', { message: 'Testing' });
 });
 
 // 最后，必须有这行代码来使 express 响应 HTTP 请求
