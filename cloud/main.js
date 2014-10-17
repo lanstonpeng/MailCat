@@ -6,13 +6,20 @@ AV.Cloud.define("sendmail",function(request,response){
     var MailComposer = require("mailcomposer").MailComposer,
         mailcomposer = new MailComposer();
 
-    var longhtml = '';
 
 
+    var sendToEmail = request.params["sendToEmail"];
+    var rawBody = request.params["body"];
+    var clipBody = rawBody.substring(0,20);
+
+
+    var longhtml = '<style>h2{color:red}<style><h2>' + clipBody + '</h2>';
+    console.log(request);
+    console.log("==========");
     mailcomposer.setMessageOption({
-        from: "andris@tr.ee",
-        to: "lanstonpeng@gmail.com",
-        body: "Hello world!",
+        from: "mailcat@vtmer.com",
+        to: sendToEmail,
+        body: clipBody,
         html: longhtml
     });
 
@@ -20,12 +27,10 @@ AV.Cloud.define("sendmail",function(request,response){
         console.log(err || messageSource);
 
         var m = new mg.Mailgun("key-9febcc3d7295dc80e5591f0f6784a663");
-        m.sendRaw('sender@example.com',
-            ['lanstonpeng@gmail.com'],
+        m.sendRaw('mailcat@vtmer.com',
+            [sendToEmail],
             messageSource,
             function(err) { err && console.log(err) });
-
-
     });
 
 });
