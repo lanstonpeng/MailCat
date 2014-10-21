@@ -72,7 +72,6 @@ AV.Cloud.define("newSendMail",function(request,response){
     ].join(" ");
 
     console.log(command);
-    return;
     execute(command,function(result){
         console.log(result);
         response.success(result);
