@@ -107,7 +107,7 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
             "dayLeft":dayLeft,
             "senderEmail":senderMail ? senderMail : "想保持神秘感的TA",
             "clipBody":clipBody,
-            "receiverName":sendToEmail.split("@")[0]
+            "receiverName":receiverName
         };
         var output = Mustache.render(data, json);
 
