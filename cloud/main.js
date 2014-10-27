@@ -110,6 +110,7 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
             "receiverName":sendToEmail.split("@")[0]
         };
         var output = Mustache.render(data, json);
+        response(output);
         return;
 
 
