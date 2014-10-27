@@ -98,9 +98,10 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
     var receiverName = request.params["receiverName"];
     var clipBody = "  " +  rawBody.substring(0,50);
 
-    var templatePath ="cloud/views/template.html";
+    var templatePath ="template.html";
 
     fs.readFile(templatePath,'utf8',function(err,data){
+        console.log(data);
         var json = {
             "sendToEmail": sendToEmail,
             "dayLeft":dayLeft,
@@ -109,6 +110,7 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
             "receiverName":sendToEmail.split("@")[0]
         };
         var output = Mustache.render(data, json);
+        return;
 
 
         var command = [
