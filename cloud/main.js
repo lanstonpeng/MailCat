@@ -4,6 +4,7 @@ var mg = require('mailgun');
 var exec = require('child_process').exec
 var Mustache = require("mustache");
 var fs = require("fs");
+var Req = require("request");
 
 AV.Cloud.define("sendmail",function(request,response){
     var MailComposer = require("mailcomposer").MailComposer,
@@ -100,8 +101,7 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
 
     var templatePath ="views/template.html";
 
-    fs.readFile(templatePath,'utf8',function(err,data){
-        console.log(data);
+    Req.get("http://mailcat.avosapps.com/template.html",function(err,res,data){
         var json = {
             "sendToEmail": sendToEmail,
             "dayLeft":dayLeft,
@@ -110,9 +110,6 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
             "receiverName":sendToEmail.split("@")[0]
         };
         var output = Mustache.render(data, json);
-        response(data);
-        return;
-
 
         var command = [
             "curl -s --user 'api:key-9febcc3d7295dc80e5591f0f6784a663'",
@@ -127,10 +124,17 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
             response.success(result);
         });
     });
+
+    /*
+    fs.readFile(templatePath,'utf8',function(err,data){
+    });
+    */
 });
 
 AV.Cloud.define("hello", function(request, response) {
-  response.success("sup man");
+    Req.get("http://mailcat.avosapps.com/template.html",function(err,res,body){
+        response.success(body);
+    });
 });
 
 AV.Cloud.define("averageStars", function(request, response) {
