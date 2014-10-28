@@ -95,16 +95,17 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
     var sendToEmail = request.params["sendToMail"];
     var rawBody = request.params["body"];
     var senderMail = request.params["senderMail"];
-    var dayLeft = request.params["dayLeft"];
+    var hourLeft = request.params["hourLeft"];
     var receiverName = request.params["receiverName"];
     var clipBody = "  " +  rawBody.substring(0,50);
 
     var templatePath = __dirname + "/views/template.html";
 
     Req.get("http://mailcat.avosapps.com/template.html",function(err,res,data){
+        console.log(res);
         var json = {
             "sendToEmail": sendToEmail,
-            "dayLeft":dayLeft,
+            "hourLeft":hourLeft,
             "senderEmail":senderMail ? senderMail.split("@")[0] : "某只猫",
             "clipBody":clipBody,
             "receiverName":receiverName
