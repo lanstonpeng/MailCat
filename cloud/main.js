@@ -155,6 +155,42 @@ AV.Cloud.afterSave("LetterData",function(request){
     })
 });
 
+AV.Cloud.afterUpdate("LetterData",function(request){
+    var sendToEmail = request.object.get("sendToEmail");
+    var queryLetter = new AV.Query("LetterData");
+    queryLetter.equalTo("sendToEmail",sendToEmail);
+    queryLetter.find({
+        success:function(results){
+            var needToChangeNewMailFlag = false;
+            for(var i = 0,len = results.length;i<len;i++)
+            {
+                var item = results[i];
+                var letterStatus = item.get("letterStatus");
+                if(letterStatus != 5){
+                    needToChangeNewMailFlag = true;
+                    break;
+                }
+            }
+            var queryUser = new AV.Query("_User");
+            query.equalTo("email", sendToEmail);
+            query.first({
+                success:function(object){
+                    object.set("hasNewMail",needToChangeNewMailFlag);
+                    object.save();
+                },
+                error:function(obj){
+                    console.log("update user data error after updating");
+                }
+            })
+        },
+        error:function(){
+            console.log("update failded");
+        }
+    });
+
+
+});
+
 AV.Cloud.define("averageStars", function(request, response) {
   var query = new AV.Query("TestObject");
   query.find({
