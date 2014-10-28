@@ -114,7 +114,8 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
 
         var command = [
             "curl -s --user 'api:key-9febcc3d7295dc80e5591f0f6784a663'",
-            "https://api.mailgun.net/v2/sandbox07642907a9c24ad988d7ee436bb30a9b.mailgun.org/messages",
+            //"https://api.mailgun.net/v2/sandbox07642907a9c24ad988d7ee436bb30a9b.mailgun.org/messages",
+            "https://api.mailgun.net/v2/mailcat.me/messages",
             "-F from='MailCat <postman@mailcat.me>'",
             "-F to='" + sendToEmail + "'",
             "-F subject='来自MailCat的信件'",
