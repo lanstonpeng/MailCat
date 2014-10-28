@@ -99,7 +99,7 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
     var receiverName = request.params["receiverName"];
     var clipBody = "  " +  rawBody.substring(0,50);
 
-    var templatePath ="views/template.html";
+    var templatePath = __dirname + "/views/template.html";
 
     Req.get("http://mailcat.avosapps.com/template.html",function(err,res,data){
         var json = {
@@ -172,8 +172,8 @@ AV.Cloud.afterUpdate("LetterData",function(request){
                 }
             }
             var queryUser = new AV.Query("_User");
-            query.equalTo("email", sendToEmail);
-            query.first({
+            queryUser.equalTo("email", sendToEmail);
+            queryUser.first({
                 success:function(object){
                     object.set("hasNewMail",needToChangeNewMailFlag);
                     object.save();
