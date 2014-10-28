@@ -137,6 +137,24 @@ AV.Cloud.define("hello", function(request, response) {
     });
 });
 
+
+
+//Hook
+AV.Cloud.afterSave("LetterData",function(request){
+    var query = new AV.Query("_User");
+    var sendToEmail = request.object.get("sendToEmail");
+    query.equalTo("email", sendToEmail);
+    query.first({
+        success:function(object){
+            object.set("hasNewMail",true);
+            object.save();
+        },
+        error:function(obj){
+            console.log("update user data error");
+        }
+    })
+});
+
 AV.Cloud.define("averageStars", function(request, response) {
   var query = new AV.Query("TestObject");
   query.find({
