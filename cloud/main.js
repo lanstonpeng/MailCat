@@ -105,7 +105,7 @@ AV.Cloud.define("sendPreviewMail",function(request,response){
         var json = {
             "sendToEmail": sendToEmail,
             "dayLeft":dayLeft,
-            "senderEmail":senderMail ? senderEmail.split("@")[0] : "某只猫",
+            "senderEmail":senderMail ? senderMail.split("@")[0] : "某只猫",
             "clipBody":clipBody,
             "receiverName":receiverName
         };
